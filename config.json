@@ -1,0 +1,3 @@
+{
+  "connectionString": "Server=(localdb)\\mssqllocaldb;Database=DGDB;Trusted_Connection=True;"
+}
