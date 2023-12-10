@@ -23,13 +23,18 @@ namespace datagenerator.core.services
 
         public User Create(string nickname, string password)
         {
+            User user = GetOne(nickname);
+
+            if (user != null)
+                throw new ArgumentException($"{nickname} user already exists");
+
             if (nickname.Length < 3 || nickname.Length > 32)
                 throw new ArgumentException("Nickname should be greater than 3 symbols and less than 32");
 
             if (password.Length < 3 || password.Length > 32)
                 throw new ArgumentException("Password should be greater than 3 symbols and less than 32");
 
-            User user = new() { Nickname = nickname, IsDeleted = false };
+            user = new() { Nickname = nickname, IsDeleted = false };
 
             try
             {
