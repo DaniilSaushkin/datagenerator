@@ -10,8 +10,10 @@ namespace datagenerator.core.models
         public Guid ID { get; set; }
 
         [Comment("Хешированный пароль")]
-        public required string Password { get; set; }
+        public string? Password { get; set; }
 
-        public User User { get; set; } = new ();
+        [Comment("Ссылка на пользователя")]
+        public Guid UserID { get; set; }
+        public User? User { get; set; }
     }
 }

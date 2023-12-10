@@ -13,13 +13,11 @@ namespace datagenerator.core.models
 
         [MaxLength(32)]
         [Comment("Псевдоним пользователя")]
-        public string? Nickname { get; set; }
+        public required string Nickname { get; set; }
 
         [Comment("Признак удаленного пользователя")]
         public bool IsDeleted { get; set; }
 
-        [Comment("Ссылка на пользовательские данные")]
-        public Guid UserDataID { get; set; }
-        public UserData? UserData { get; set; }
+        public UserData UserData { get; set; } = new ();
     }
 }

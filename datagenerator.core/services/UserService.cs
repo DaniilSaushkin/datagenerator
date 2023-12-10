@@ -29,19 +29,7 @@ namespace datagenerator.core.services
             if (password.Length < 3 || password.Length > 32)
                 throw new ArgumentException("Password should be greater than 3 symbols and less than 32");
 
-            UserData userData = new() { Password = EncryptionPassword(password, nickname)};
-
-            try
-            {
-                _context.Add(userData);
-                _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error creating password: " + ex.Message, ex);
-            }
-
-            User user = new() { Nickname = nickname, UserData = userData, IsDeleted = false };
+            User user = new() { Nickname = nickname, IsDeleted = false };
 
             try
             {
@@ -51,6 +39,18 @@ namespace datagenerator.core.services
             catch (Exception ex)
             {
                 throw new Exception("Error creating user: " + ex.Message, ex);
+            }
+
+            UserData userData = new() { Password = EncryptionPassword(password, nickname), User = user };
+
+            try
+            {
+                _context.Add(userData);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error creating password: " + ex.Message, ex);
             }
 
             return user;
@@ -116,7 +116,12 @@ namespace datagenerator.core.services
             for (int i = 0; i < 3; i++)
                 saltBytes = SHA256.HashData(saltBytes);
 
-            return saltBytes.ToString();
+            StringBuilder stringBuilder = new ();
+
+            foreach (byte b in saltBytes)
+                stringBuilder.Append(b);
+
+            return stringBuilder.ToString();
         }
     }
 }
