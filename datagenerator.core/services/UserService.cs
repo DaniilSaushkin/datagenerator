@@ -8,7 +8,7 @@ namespace datagenerator.core.services
 {
     public sealed class UserService
     {
-        public readonly DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public UserService(DatabaseContext context)
         {
